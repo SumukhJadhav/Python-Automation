@@ -50,7 +50,7 @@ def takeCommand():
         r.operation_timeout = 1 
         audio = r.listen(source)
 
-
+        
         try:
             print("Tell me..")
             query = r.recognize_google(audio, language='en-in')
@@ -63,6 +63,7 @@ def takeCommand():
             return "None"
         return query
 
+    
 def respond():
         query = takeCommand().lower()
 
