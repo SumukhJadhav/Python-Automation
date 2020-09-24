@@ -29,7 +29,7 @@ class Ui(QtWidgets.QMainWindow):
             try:
                 search(locality)
                 #print(Grecovered)
-                self.UpdataData_2.setText(locality + " Current " + " Status")
+                self.UpdataData_2.setText(locality + " Current" + " Status")
                 self.Confirmed.setText("Confirmed\n{:,}".format(Gconfirmed))
                 self.Active.setText("Active\n{:,}".format(Gactive))
                 self.Recovered.setText("Recovered\n{:,}".format(Grecovered))
@@ -43,7 +43,7 @@ class Ui(QtWidgets.QMainWindow):
                 countrySearch(locality)
                 if type(Cconfirmed) == int:
 
-                    self.UpdataData_2.setText(locality + " Current " + " Status")
+                    self.UpdataData_2.setText(locality + " Current" + " Status")
                     self.Confirmed.setText("Confirmed\n{:,}".format(int(Cconfirmed)))
                     self.Active.setText("Active\n{:,}".format(int(Cactive)))
                     self.Recovered.setText("Recovered\n{:,}".format(int(Crecovered)))
@@ -85,49 +85,48 @@ def search(locality):
     global Grecovered
     global Gdeaths
 
+    if locality == "India":
+        #print("India")
+        cursor.execute("SELECT SUM(confirmed) FROM dis")
+        Gconfirmed = int(re.sub("[^0-9]", "", str(cursor.fetchone())))
+
+        cursor.execute("SELECT SUM(active) FROM dis")
+        Gactive = int(re.sub("[^0-9]", "", str(cursor.fetchone())))
+
+        cursor.execute("SELECT SUM(recovered) FROM dis")
+        Grecovered = int(re.sub("[^0-9]", "", str(cursor.fetchone())))
+
+        cursor.execute("SELECT SUM(deaths) FROM dis")
+        Gdeaths = int(re.sub("[^0-9]", "", str(cursor.fetchone())))
+
+        return None
+
     try:
         cursor.execute("select confirmed from dis where districts = %s", (locality,))
-        data = int(re.sub("[^0-9]", "", str(cursor.fetchone())))
-        print("Confirmed:", data)
-        Gconfirmed = data
-
+        Gconfirmed = int(re.sub("[^0-9]", "", str(cursor.fetchone())))
+ 
         cursor.execute("select active from dis where districts = %s", (locality,))
-        data = int(re.sub("[^0-9]", "", str(cursor.fetchone())))
-        print("Active:", data)
-        Gactive = data
+        Gactive = int(re.sub("[^0-9]", "", str(cursor.fetchone())))
 
         cursor.execute("select recovered from dis where districts = %s", (locality,))
-        data = int(re.sub("[^0-9]", "", str(cursor.fetchone())))
-        print("Recovered:", data)
-        Grecovered = data
+        Grecovered = int(re.sub("[^0-9]", "", str(cursor.fetchone())))
 
         cursor.execute("select deaths from dis where districts = %s", (locality,))
-        data = int(re.sub("[^0-9]", "", str(cursor.fetchone())))
-        print("Deaths:", data)
-        Gdeaths = data
+        Gdeaths = int(re.sub("[^0-9]", "", str(cursor.fetchone())))
+
 
     except (ValueError):
         cursor.execute("select confirmed from state where states = %s", (locality,))
-        data = int(re.sub("[^0-9]", "", str(cursor.fetchone())))
-        print("Confirmed:", data)
-        Gconfirmed = data
+        Gconfirmed = int(re.sub("[^0-9]", "", str(cursor.fetchone())))
 
         cursor.execute("select active from state where states = %s", (locality,))
-        data = int(re.sub("[^0-9]", "", str(cursor.fetchone())))
-        print("Active:", data)
-        Gactive = data
+        Gactive  = int(re.sub("[^0-9]", "", str(cursor.fetchone())))
 
         cursor.execute("select recovered from state where states = %s", (locality,))
-        data = int(re.sub("[^0-9]", "", str(cursor.fetchone())))
-        print("Recovered:", data)
-        Grecovered = data
+        Grecovered = int(re.sub("[^0-9]", "", str(cursor.fetchone())))
 
         cursor.execute("select deaths from state where states = %s", (locality,))
-        data = int(re.sub("[^0-9]", "", str(cursor.fetchone())))
-        print("Deaths:", data) 
-        Gdeaths = data
-    
-
+        Gdeaths = int(re.sub("[^0-9]", "", str(cursor.fetchone())))
  
 def countrySearch(locality):
 
@@ -135,7 +134,6 @@ def countrySearch(locality):
     global Cactive
     global Crecovered
     global Cdeaths
-
 
     try:
         country = locality.lower().replace(" ", "-")
@@ -162,6 +160,7 @@ def countrySearch(locality):
         Cactive = Active
         Crecovered = int((re.sub("[],]","", data[2])))
         Cdeaths = int((re.sub("[],]","", data[1])))
+
     except:
         print("fail")
         Cconfirmed = ""
