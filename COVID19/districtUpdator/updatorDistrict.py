@@ -14,7 +14,7 @@ import urllib.request, urllib.parse, urllib.error
 import json
 
 
-mydb = mysql.connector.connect(host = "localhost", user = "smoke", passwd = "hellomoto", database = "test")
+mydb = mysql.connector.connect(host = "localhost", user = "smoke", passwd = "hellomoto", database = "test", autocommit=True)
 cursor = mydb.cursor()
 
 
@@ -31,7 +31,7 @@ class Ui(QtWidgets.QMainWindow):
             try:  
                 districtName = self.lineEdit.text().title()
                 cases = int(self.lineEdit_2.text().title())
-                self.lineEdit.clear()
+                #self.lineEdit.clear()
                 self.lineEdit_2.clear()            
                 #print(districtName)
                 #print(cases)
@@ -74,7 +74,7 @@ class Ui(QtWidgets.QMainWindow):
             try:  
                 districtName = self.lineEdit.text().title()
                 cases = int(self.lineEdit_2.text().title())
-                self.lineEdit.clear()
+                #self.lineEdit.clear()
                 self.lineEdit_2.clear()            
                 #print(districtName)
                 #print(cases)
@@ -117,7 +117,7 @@ class Ui(QtWidgets.QMainWindow):
             try:  
                 districtName = self.lineEdit.text().title()
                 cases = int(self.lineEdit_2.text().title())
-                self.lineEdit.clear()
+                #self.lineEdit.clear()
                 self.lineEdit_2.clear()            
                 #print(districtName)
                 #print(cases)
