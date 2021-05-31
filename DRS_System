@@ -1,0 +1,40 @@
+import tkinter
+import cv2
+import PIL.Image, PIL.ImageTk
+#import PIL.ImageTK
+from functools import partial
+SET_WIDTH = 650
+SET_HEIGHT = 368
+
+def play():
+    print("Playing")
+
+def out():
+    pass
+
+def not_out():
+    pass
+
+window = tkinter.Tk()
+window.title = ("Smoke DRS")
+canvas = tkinter.Canvas(window, width=SET_WIDTH, height=SET_HEIGHT)
+cv_img =cv2.cvtColor(cv2.imread("wel.jpg"), cv2.COLOR_BGR2RGB)
+photo = PIL.ImageTk.PhotoImage(image=PIL.Image.fromarray(cv_img))
+image_on_canvas = canvas.create_image(0,0, ancho=tkinter.NW, image=photo)
+canvas.pack()
+
+#buttons
+btn = tkinter.Button(window, text="Previous(fast)", width=50, command = partial(play, -25))
+btn.pack()
+btn = tkinter.Button(window, text="Previous(slow)", width=50, command = partial(play, -2))
+btn.pack()
+btn = tkinter.Button(window, text="Next(slow)", width=50, command = partial(play, 2))
+btn.pack()
+btn = tkinter.Button(window, text="Next(fast)", width=50, command = partial(play, 25))
+btn.pack()
+btn = tkinter.Button(window, text="Not Out", width=50, command=out)
+btn.pack()
+btn = tkinter.Button(window, text="Out", width=50, command=not_out)
+btn.pack()
+
+window.mainloop();
